@@ -1,0 +1,28 @@
+services:
+  agent:
+    container_name: agent
+    image: vaulty-1.11.4-ent
+    volumes:
+      - type: bind
+        source: ./role
+        target: /vault/role
+      - type: bind
+        source: ./secret
+        target: /vault/secret
+      - type: bind
+        source: ./config.hcl
+        target: /vault/config.hcl
+    ports:
+      - "8220:8220"
+    cap_add:
+      - "IPC_LOCK"
+    env_file:
+      - /Users/maxwinslow/dev/docker-k8s/vaulty/license.env
+    networks:
+      vaulty-net:
+        ipv4_address: 192.168.211.13
+    command: vault agent -config=/vault/config.hcl
+networks:
+  vaulty-net:
+    name: vaulty-net
+    external: true

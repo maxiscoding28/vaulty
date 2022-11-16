@@ -1,0 +1,16 @@
+services:
+  fluentd:
+    container_name: fluentd-splunk
+    image: fluentd-splunk
+    volumes:
+      - type: bind
+        source: ./docker.conf
+        target: /fluentd/etc/docker.conf
+    networks:
+      vaulty-net:
+        ipv4_address: 192.168.211.16
+    command: fluentd -c /fluentd/etc/docker.conf
+networks:
+  vaulty-net:
+    name: vaulty-net
+    external: true

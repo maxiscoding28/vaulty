@@ -1,0 +1,5 @@
+init.json
+license.env
+.DS_Store
+vault-prometheus-token
+provider/*

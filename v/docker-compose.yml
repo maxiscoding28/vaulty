@@ -1,0 +1,86 @@
+services:
+  v0:
+    container_name: v0
+    image: hashicorp/vault-enterprise:${VERSION:-latest}
+    volumes:
+      - type: bind
+        source: ./v-configs/config0.hcl
+        target: /vault/config/config.hcl
+      - type: bind
+        source: ./data/data0
+        target: /opt/vault/data
+    ports:
+      - "8200:8200"
+    cap_add:
+      - "IPC_LOCK"
+    env_file:
+      - ../license.env
+    environment:
+      - VAULT_ADDR=http://127.0.0.1:8200
+    # logging:
+    #   driver: fluentd
+    #   options:
+    #     fluentd-address: 192.168.211.16:24224
+    #     tag: "{{.Name}}"
+    networks:
+      vaulty-net:
+        ipv4_address: 192.168.211.2
+    command: server
+  v1:
+    container_name: v1
+    image: hashicorp/vault-enterprise:${VERSION:-latest}
+    volumes:
+      - type: bind
+        source: ./v-configs/config1.hcl
+        target: /vault/config/config.hcl
+      - type: bind
+        source: ./data/data1
+        target: /opt/vault/data
+    ports:
+      - "8202:8202"
+    cap_add:
+      - "IPC_LOCK"
+    env_file:
+      - ../license.env
+    environment:
+      - VAULT_ADDR=http://127.0.0.1:8202
+    # logging:
+    #   driver: fluentd
+    #   options:
+    #     fluentd-address: 192.168.211.16:24224
+    #     tag: "{{.Name}}"
+    networks:
+      vaulty-net:
+        ipv4_address: 192.168.211.3
+    command: server
+  v2:
+    container_name: v2
+    image: hashicorp/vault-enterprise:${VERSION:-latest}
+    volumes:
+      - type: bind
+        source: ./v-configs/config2.hcl
+        target: /vault/config/config.hcl
+      - type: bind
+        source: ./data/data2
+        target: /opt/vault/data
+    ports:
+      - "8204:8204"
+    cap_add:
+      - "IPC_LOCK"
+    env_file:
+      - ../license.env
+    environment:
+      - VAULT_ADDR=http://127.0.0.1:8204
+    # logging:
+    #   driver: fluentd
+    #   options:
+    #     fluentd-address: 192.168.211.16:24224
+    #     tag: "{{.Name}}"
+    networks:
+      vaulty-net:
+        ipv4_address: 192.168.211.4
+    command: server
+networks:
+  vaulty-net:
+    name: vaulty-net
+    external: true

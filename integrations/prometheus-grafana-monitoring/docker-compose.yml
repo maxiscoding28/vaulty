@@ -1,0 +1,32 @@
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    volumes:
+      - type: bind
+        source: /Users/maxwinslow/dev/docker-k8s/vaulty/prometheus-grafana-monitoring/prometheus-config/prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+      - type: bind
+        source: /Users/maxwinslow/dev/docker-k8s/vaulty/prometheus-grafana-monitoring/prometheus-config/vault-prometheus-token
+        target: /etc/prometheus/vault-prometheus-token
+    ports:
+      - "9090:9090"
+    networks:
+      vaulty-net:
+        ipv4_address: 192.168.211.14
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    volumes:
+      - type: bind
+        source: /Users/maxwinslow/dev/docker-k8s/vaulty/prometheus-grafana-monitoring/grafana-config/datasource.yml
+        target: /etc/grafana/provisioning/datasources/prometheus_datasource.yml
+    ports:
+      - "3000:3000"
+    networks:
+      vaulty-net:
+        ipv4_address: 192.168.211.15
+networks:
+  vaulty-net:
+    name: vaulty-net
+    external: true

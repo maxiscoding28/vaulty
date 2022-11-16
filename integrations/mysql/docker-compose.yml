@@ -1,0 +1,15 @@
+services:
+  single-node:
+    container_name: mysql
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3306:3306"
+    networks:
+      vaulty-net:
+        ipv4_address: 192.168.211.12
+networks:
+  vaulty-net:
+    name: vaulty-net
+    external: true

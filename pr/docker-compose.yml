@@ -1,0 +1,71 @@
+services:
+  pr0:
+    container_name: pr0
+    image: hashicorp/vault-enterprise:${VERSION:-latest}
+    volumes:
+      - type: bind
+        source: ./pr-configs/config0.hcl
+        target: /vault/config/config.hcl
+      - type: bind
+        source: ./data/data0
+        target: /opt/vault/data
+    ports:
+      - "8212:8212"
+    cap_add:
+      - "IPC_LOCK"
+    env_file:
+      - ../license.env
+    environment:
+      - VAULT_ADDR=http://127.0.0.1:8212
+    networks:
+      vaulty-net:
+        ipv4_address: 192.168.211.8
+    command: server
+  pr1:
+    container_name: pr1
+    image: hashicorp/vault-enterprise:${VERSION:-latest}
+    volumes:
+      - type: bind
+        source: ./pr-configs/config1.hcl
+        target: /vault/config/config.hcl
+      - type: bind
+        source: ./data/data1
+        target: /opt/vault/data
+    ports:
+      - "8214:8214"
+    cap_add:
+      - "IPC_LOCK"
+    env_file:
+      - ../license.env
+    environment:
+      - VAULT_ADDR=http://127.0.0.1:8214
+    networks:
+      vaulty-net:
+        ipv4_address: 192.168.211.9
+    command: server
+  pr2:
+    container_name: pr2
+    image: hashicorp/vault-enterprise:${VERSION:-latest}
+    volumes:
+      - type: bind
+        source: ./pr-configs/config2.hcl
+        target: /vault/config/config.hcl
+      - type: bind
+        source: ./data/data2
+        target: /opt/vault/data        
+    ports:
+      - "8216:8216"
+    cap_add:
+      - "IPC_LOCK"
+    env_file:
+      - ../license.env
+    environment:
+      - VAULT_ADDR=http://127.0.0.1:8216
+    networks:
+      vaulty-net:
+        ipv4_address: 192.168.211.10
+    command: server
+networks:
+  vaulty-net:
+    name: vaulty-net
+    external: true

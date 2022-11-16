@@ -1,0 +1,10 @@
+scrape_configs:
+  - job_name: vault
+    metrics_path: /v1/sys/metrics
+    params:
+      format: ['prometheus']
+    scheme: http
+    authorization:
+      credentials_file: /etc/prometheus/vault-prometheus-token
+    static_configs:
+    - targets: ['192.168.211.2:8200']
