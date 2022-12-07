@@ -3,15 +3,9 @@ services:
     container_name: v0
     image: hashicorp/vault-enterprise:${VERSION:-latest}
     volumes:
-      - type: bind
-        source: ./v-configs/config0.hcl
-        target: /vault/config/config.hcl
-      - type: bind
-        source: ./data/data0
-        target: /opt/vault/data
-      - type: bind
-        source: ./logs/vault.log
-        target: /vault/logs/vault.log
+      - ./v-configs/config0.hcl:/vault/config/config.hcl
+      - ./data/data0:/opt/vault/data
+      - ./logs/vault.log:/vault/logs/vault.log
     ports:
       - "8200:8200"
     cap_add:
@@ -33,12 +27,9 @@ services:
     container_name: v1
     image: hashicorp/vault-enterprise:${VERSION:-latest}
     volumes:
-      - type: bind
-        source: ./v-configs/config1.hcl
-        target: /vault/config/config.hcl
-      - type: bind
-        source: ./data/data1
-        target: /opt/vault/data
+      - ./v-configs/config1.hcl:/vault/config/config.hcl
+      - ./data/data1:/opt/vault/data
+      - ./logs/vault.log:/vault/logs/vault.log
     ports:
       - "8202:8202"
     cap_add:
@@ -60,12 +51,9 @@ services:
     container_name: v2
     image: hashicorp/vault-enterprise:${VERSION:-latest}
     volumes:
-      - type: bind
-        source: ./v-configs/config2.hcl
-        target: /vault/config/config.hcl
-      - type: bind
-        source: ./data/data2
-        target: /opt/vault/data
+      - ./v-configs/config2.hcl:/vault/config/config.hcl
+      - ./data/data2:/opt/vault/data
+      - ./logs/vault.log:/vault/logs/vault.log
     ports:
       - "8204:8204"
     cap_add:
