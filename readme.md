@@ -12,9 +12,13 @@ For Vaulty to work, you must first have Docker installed and a network created u
 docker network create vaulty-net --subnet 192.168.211.0/24
 ```
 ### Startng the Nodes
-Each node is running on a separate port that is exposed on the host machine. Therefore each node can be accessed individually by updating the `VAULT_ADDR` on the host machine. This is useful for inspecting individual nodes during repro scenarios. You can start each cluster by executing the `./start-cluster.sh` script from within the clusters directory in the project repo.
+Each node is running on a separate port that is exposed on the host machine. Therefore each node can be accessed individually by updating the `VAULT_ADDR` on the host machine. This is useful for inspecting individual nodes during repro scenarios. You can start each cluster by executing the 
+`./start-cluster.sh` script from within the clusters directory in the project repo.
 
-The `./start-cluster` script will attempt to initialize, unseal and join the 3 nodes. If you don't want the script to attempt these actions you can pass the `ni` argument to the script ("no init"): `./start-cluster ni`.
+The `./start-cluster` script will attempt to initialize, unseal and join the 3 nodes. If you don't want the script to attempt these actions you can pass the `ni` argument to the script ("no init"): 
+```
+./start-cluster ni`.
+```
 
 Optionally, to make troubleshooting easier, I added the following lines to my `.zshrc` file to make each node in the 3 clusters directly addressable:
 ```
@@ -61,7 +65,11 @@ By default the `:latest` tag of the vault-enterprise docker image is used. To ru
 ```
 
 ### Enabling a File Audit Device
-[A file based audit device](https://developer.hashicorp.com/vault/docs/audit/file) can be enabled by writing to `vault audit enable file file_path=/vault/logs/vault.log`. This is a volume defined in the docker-compose.yml and the file can be inspected on your local machine at the `./logs/vault.log` path in the cluster directory.
+[A file based audit device](https://developer.hashicorp.com/vault/docs/audit/file) can be enabled by running:
+```
+vault audit enable file file_path=/vault/logs/vault.log
+```
+This is a volume defined in the docker-compose.yml and the file can be inspected on your local machine at the `./logs/vault.log` path in the cluster directory.
  
 ## Provider (work in progress)
 [View Readme](./v/provider/readme.md)
