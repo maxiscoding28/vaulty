@@ -8,3 +8,4 @@ provider/*
 **/.terraform/*
 *.tfvars
 *.tfvars.json
+*.log
