@@ -17,7 +17,7 @@ Each node is running on a separate port that is exposed on the host machine. The
 
 The `./start-cluster` script will attempt to initialize, unseal and join the 3 nodes. If you don't want the script to attempt these actions you can pass the `ni` argument to the script ("no init"): 
 ```
-./start-cluster ni.
+./start-cluster ni
 ```
 
 Optionally, to make troubleshooting easier, I added the following lines to my `.zshrc` file to make each node in the 3 clusters directly addressable:
