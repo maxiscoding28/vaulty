@@ -9,6 +9,9 @@ services:
       - type: bind
         source: ./data/data0
         target: /opt/vault/data
+      - type: bind
+        source: ./logs/vault.log
+        target: /vault/logs/vault.log
     ports:
       - "8200:8200"
     cap_add:

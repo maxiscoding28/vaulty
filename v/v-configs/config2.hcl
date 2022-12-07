@@ -15,6 +15,11 @@ storage "raft" {
     }
 }
 
+telemetry {
+  disable_hostname = true
+  prometheus_retention_time = "12h"
+}
+
 api_addr = "http://v2:8204"
 cluster_addr = "http://v2:8205"
 cluster_name = "v-cluster"

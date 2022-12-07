@@ -3,3 +3,8 @@ license.env
 .DS_Store
 vault-prometheus-token
 provider/*
+*.tfstate
+*.tfstate.*
+**/.terraform/*
+*.tfvars
+*.tfvars.json

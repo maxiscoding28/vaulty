@@ -6,5 +6,6 @@ Color_Off='\033[0m'
 docker-compose -p pr down -v
 rm -f ./init.json
 rm -rf data/data0/* data/data1/* data/data2/*
+> logs/vault.log
 echo -e ${Yellow}Removing files${Color_Off}
 echo -e ${Red}Stopped primary cluster${Color_Off}
