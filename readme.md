@@ -12,7 +12,9 @@ docker network create vaulty-net --subnet 192.168.211.0/24
 ```
 Each node is running on a separate port that is exposed on the host machine. Therefore each node can be accessed individually by updating the `VAULT_ADDR` on the host machine. This is useful for inspecting individual nodes during repro scenarios. You can start each cluster by executing the `./start-cluster.sh` script from within the clusters directory in the project repo.
 
-By default the `:latest` tag is used. To run the cluster with a different [tagged version](https://hub.docker.com/r/hashicorp/vault-enterprise/tags) you can pass it as an environment variable in the command e.g.
+The `./start-cluster` script will attempt to initialize, unseal and join the 3 nodes. If you don't want the script to attempt these actions you can pass the `ni` for "no init" to the script: `./start-cluster ni`.
+
+By default the `:latest` tag of the vault-enterprise docker image is used. To run the cluster with a different [tagged version](https://hub.docker.com/r/hashicorp/vault-enterprise/tags) you can pass it as an environment variable in the command e.g.
 ```
  VERSION=1.11-ent ./start-cluster.sh
 ```
