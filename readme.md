@@ -19,6 +19,8 @@ By default the `:latest` tag of the vault-enterprise docker image is used. To ru
  VERSION=1.11-ent ./start-cluster.sh
 ```
 
+[A file based audit device](https://developer.hashicorp.com/vault/docs/audit/file) can be enabled by writing to `vault audit enable file file_path=/vault/logs/vault.log`.
+
 Optionally, to make troubleshooting easier, I added the following lines to my `.zshrc` file to make each node in the 3 clusters directly addressable: 
 ```
 ## v
