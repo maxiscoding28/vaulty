@@ -13,7 +13,7 @@ docker network create vaulty-net --subnet 192.168.211.0/24
 ```
 ### Startng the Nodes
 Each node in a cluster is running on a separate port that is exposed on the host machine. Therefore each node can be accessed individually by updating the `VAULT_ADDR` on the host machine. This is useful for inspecting individual nodes during repro scenarios. You can start a cluster by executing the 
-`./start-cluster.sh` script from within the clusters directory in the project repo - [v](./v/start-cluster.sh), [dr](./dr/start-cluster.sh), [pr](./pr/start-cluster.sh).
+`./start-cluster.sh` script from within the cluster's directory in the project repo - [v](./v/start-cluster.sh), [dr](./dr/start-cluster.sh), [pr](./pr/start-cluster.sh).
 
 The `./start-cluster` script will attempt to initialize, unseal and join the 3 nodes together. If you don't want the script to attempt these actions you can pass the `ni` argument to the script ("no init"): 
 ```
