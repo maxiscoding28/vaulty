@@ -3,7 +3,7 @@
 ## Overview
 Vaulty is my attempt to create an easily configurable environment for reproducing common issues encountered in the course of me working support tickets for Hashicorp vault.
 
-The repo makes use of the [official Vault Enterprise Docker image](https://hub.docker.com/r/hashicorp/vault-enterprise) and [docker-compose](https://docs.docker.com/compose/) to create 3 three-node vault clusters using integrated storage backends. You will need a license file with filename `license.env` in your root project directory and you'll need you license to be formatted as `VAULT_LICENSE=$YOUR_LICENSE`.
+The repo makes use of the [official Vault Enterprise Docker image](https://hub.docker.com/r/hashicorp/vault-enterprise) and [docker-compose](https://docs.docker.com/compose/) to create 3 three-node vault clusters using integrated storage backends. You will need a license file with filename `license.env` in your root project directory and you'll need your license to be formatted as `VAULT_LICENSE=$YOUR_LICENSE`.
 
 ## Getting Started
 ### Creating the Network
