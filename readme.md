@@ -12,15 +12,15 @@ For Vaulty to work, you must first have Docker installed and a network created u
 docker network create vaulty-net --subnet 192.168.211.0/24
 ```
 ### Startng the Nodes
-Each node is running on a separate port that is exposed on the host machine. Therefore each node can be accessed individually by updating the `VAULT_ADDR` on the host machine. This is useful for inspecting individual nodes during repro scenarios. You can start each cluster by executing the 
-`./start-cluster.sh` script from within the clusters directory in the project repo.
+Each node in a cluster is running on a separate port that is exposed on the host machine. Therefore each node can be accessed individually by updating the `VAULT_ADDR` on the host machine. This is useful for inspecting individual nodes during repro scenarios. You can start a cluster by executing the 
+`./start-cluster.sh` script from within the clusters directory in the project repo - [v](./v/start-cluster.sh), [dr](./dr/start-cluster.sh), [pr](./pr/start-cluster.sh).
 
-The `./start-cluster` script will attempt to initialize, unseal and join the 3 nodes. If you don't want the script to attempt these actions you can pass the `ni` argument to the script ("no init"): 
+The `./start-cluster` script will attempt to initialize, unseal and join the 3 nodes together. If you don't want the script to attempt these actions you can pass the `ni` argument to the script ("no init"): 
 ```
 ./start-cluster ni
 ```
 
-Optionally, to make troubleshooting easier, I added the following lines to my `.zshrc` file to make each node in the 3 clusters directly addressable:
+Optionally, to make troubleshooting easier, I added the following lines to my `.zshrc` file to make each node in the 3 clusters more quickly addressable in commands:
 ```
 ## v
 alias v0='VAULT_ADDR=http://127.0.0.1:8200 vault'
@@ -69,22 +69,33 @@ By default the `:latest` tag of the vault-enterprise docker image is used. To ru
 ```
 vault audit enable file file_path=/vault/logs/vault.log
 ```
-This is a volume defined in the docker-compose.yml and the file can be inspected on your local machine at the `./logs/vault.log` path in the cluster directory.
+This is a volume defined in the docker-compose.yml for each cluster and the file can be inspected on your local machine at the `./logs/vault.log` path in the cluster directory - [v](./v/logs), [dr](./dr/logs), [pr](./pr/logs).
  
 ## Provider (work in progress)
+Terraform code to quickly populate the vault clusters with configured auth methods, identities, policies, and secrets engines for testing. You can learn more in the readme.
 [View Readme](./v/provider/readme.md)
 
 ## Integrations (work in progress)
-### LDAP - https://hub.docker.com/r/bitnami/openldap/
-
-### Mysql - A Mysql container for DB secrets engine
-[View Readme](./integrations/mysql/readme.md)
-
-### Agent - A Vault Agent
-[View Readme](./integrations/agent/readme.md)
-
+Additional docker-compose.ymls and configuration files for running containers that can interact with the Vaulty clusters. You can learn more in the readme for each directory.
 ### Prometheus/Grafana - Telemtry Monitoring
 [View Readme](./integrations/prometheus-grafana-monitoring/readme.md)
 
 ### Fluentd - For pushing to a local splunk instance
 [View Readme](./integrations/fluentd-splunk/readme.md)
+
+### Mysql - A Mysql container for DB secrets engine
+[View Readme](./integrations/mysql/readme.md)
+
+### MsSql - A Mysql container for DB secrets engine
+[View Readme](./integrations/mysql/readme.md)
+
+### Postgres - A Mysql container for DB secrets engine
+[View Readme](./integrations/mysql/readme.md)
+
+### MongoDB - A Mysql container for DB secrets engine
+[View Readme](./integrations/mysql/readme.md)
+
+### Agent - A Vault Agent
+[View Readme](./integrations/agent/readme.md)
+
+### LDAP - https://hub.docker.com/r/bitnami/openldap/
