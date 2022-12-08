@@ -14,11 +14,12 @@ services:
       - ../license.env
     environment:
       - VAULT_ADDR=http://127.0.0.1:8212
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: 192.168.211.16:24224
-    #     tag: "{{.Name}}"
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 192.168.211.16:24224
+        tag: "{{.Name}}"
+        fluentd-async: "true"
     networks:
       vaulty-net:
         ipv4_address: 192.168.211.8
@@ -38,11 +39,12 @@ services:
       - ../license.env
     environment:
       - VAULT_ADDR=http://127.0.0.1:8214
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: 192.168.211.16:24224
-    #     tag: "{{.Name}}"
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 192.168.211.16:24224
+        tag: "{{.Name}}"
+        fluentd-async: "true"
     networks:
       vaulty-net:
         ipv4_address: 192.168.211.9
@@ -62,11 +64,12 @@ services:
       - ../license.env
     environment:
       - VAULT_ADDR=http://127.0.0.1:8216
-    # logging:
-    #   driver: fluentd
-    #   options:
-    #     fluentd-address: 192.168.211.16:24224
-    #     tag: "{{.Name}}"
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: 192.168.211.16:24224
+        tag: "{{.Name}}"
+        fluentd-async: "true"
     networks:
       vaulty-net:
         ipv4_address: 192.168.211.10

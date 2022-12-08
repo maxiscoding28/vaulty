@@ -7,3 +7,13 @@ variable "secret_key" {
 variable "integration_key" {
     type = string
 }
+
+variable "okta_token" {
+    type = string
+}
+variable "okta_organization" {
+    type = string
+}
+variable "github_token" {
+    type = string
+}

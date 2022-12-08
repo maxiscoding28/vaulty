@@ -12,7 +12,18 @@ resource "vault_policy" "admin" {
 }
 
 # Viewer policy
+data "vault_policy_document" "viewer-pd" {
+  rule {
+    path         = "*"
+    capabilities = ["read"]
+    description  = "View everything"
+  }
+}
+resource "vault_policy" "viewer" {
+  name   = "viewer"
+  policy = data.vault_policy_document.viewer-pd.hcl
+}
 
-## Namespace policy
+# DR Token Policy
 
-## Sentinel Policy RGP/EgP
+## Sentinel Policy RGP/EGP
