@@ -1,12 +1,9 @@
 # Entity
 resource "vault_identity_entity" "admin" {
   name      = "admin"
-  policies  = [""]
-  metadata  = {
-    foo = "bar"
-  }
+  policies  = ["admin"]
 }
-# Entity Alias
-# Group 
-# Group Alias
-# OIDC provider
+resource "vault_identity_entity" "viewer" {
+  name      = "viewer"
+  policies  = ["viewer"]
+}

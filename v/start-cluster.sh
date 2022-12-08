@@ -12,8 +12,8 @@ if ! docker-compose -p v up -d; then
     echo -e ${Red}docker-compose up step failed or was cancelled. Check the docker-compose.yml file.${Color_Off}
 else
 if [[ "$Dont_Init_Flag" = "ni" ]]; then
-    echo -e ${Yellow}The \"noinit\" argument was passed \'ni\'. Vault was not initialized.${Color_Off}
-    echo -e ${Yellow}The Vault containers are running but vault was not initialized.${Color_Off}
+    echo -e ${Yellow}The \"noinit\" argument was passed \'ni\'.${Color_Off}
+    echo -e ${Green}The Vault containers are running${Color_Off}${Yellow} but vault was not initialized.${Color_Off}
 
 elif [[ $# -eq 1 && $Dont_Init_Flag!=ni ]]; then
     echo -e ${Yellow}The argument passed to ./start-cluster wasn\'t recognized. Only \'ni\' is accepted.${Color_Off}

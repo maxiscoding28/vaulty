@@ -17,15 +17,6 @@ resource "vault_mount" "kv2" {
 }
 
 # +-----+
-# | AWS |
-# +-----+
-# https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/aws_secret_backend
-# resource "vault_aws_secret_backend" "aws" {
-#   access_key = "AKIA....."
-#   secret_key = "AWS secret key"
-# }
-
-# +-----+
 # | PKI |
 # +-----+
 # resource "vault_mount" "pki" {
@@ -35,11 +26,6 @@ resource "vault_mount" "kv2" {
 #   max_lease_ttl_seconds     = 86400
 # }
 
-# resource "vault_pki_secret_backend_crl_config" "crl_config" {
-#   backend = vault_mount.pki.path
-#   expiry  = "72h"
-#   disable = false
-# }
 
 # +----------+
 # | Database |
@@ -91,25 +77,6 @@ resource "vault_mount" "kv2" {
 #     "CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}';",
 #     "GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"{{name}}\";",
 #   ]
-# }
-
-# +------------------+
-# | Active Directory |
-# +------------------+
-# resource "vault_ad_secret_backend" "config" {
-#     backend       = "ad"
-#     binddn        = "CN=Administrator,CN=Users,DC=corp,DC=example,DC=net"
-#     bindpass      = "SuperSecretPassw0rd"
-#     url           = "ldaps://ad"
-#     insecure_tls  = "true"
-#     userdn        = "CN=Users,DC=corp,DC=example,DC=net"
-# }
-
-# +-----+
-# | GCP |
-# +-----+
-# resource "vault_gcp_secret_backend" "gcp" {
-#   credentials = file("credentials.json")
 # }
 
 # +------+

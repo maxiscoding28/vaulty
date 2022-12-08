@@ -6,7 +6,7 @@ resource "vault_auth_backend" "userpass_auth" {
   type = "userpass"
 }
 resource "vault_generic_endpoint" "userpass_auth_user_admin" {
-  depends_on           = [vault_auth_backend.userpass]
+  depends_on           = [vault_auth_backend.userpass_auth]
   path                 = "auth/userpass/users/admin"
 
   data_json = <<EOT
@@ -16,11 +16,22 @@ resource "vault_generic_endpoint" "userpass_auth_user_admin" {
 }
 EOT
 }
+resource "vault_generic_endpoint" "userpass_auth_user_viewer" {
+  depends_on           = [vault_auth_backend.userpass_auth]
+  path                 = "auth/userpass/users/viewer"
+
+  data_json = <<EOT
+{
+  "policies": ["viewer"],
+  "password": "viewer"
+}
+EOT
+}
 resource "vault_auth_backend" "mfa_userpass_auth" {
   path = "mfa_userpass"
   type = "userpass"
 }
-resource "vault_generic_endpoint" "userpass_auth_user_mfa_admin" {
+resource "vault_generic_endpoint" "mfa_userpass_auth_user_admin" {
   depends_on           = [vault_auth_backend.mfa_userpass_auth]
   path                 = "auth/userpass/users/mfa_admin"
 
@@ -28,6 +39,17 @@ resource "vault_generic_endpoint" "userpass_auth_user_mfa_admin" {
 {
   "policies": ["admin"],
   "password": "admin"
+}
+EOT
+}
+resource "vault_generic_endpoint" "mfa_userpass_auth_user_viewer" {
+  depends_on           = [vault_auth_backend.mfa_userpass_auth]
+  path                 = "auth/userpass/users/mfa_viewer"
+
+  data_json = <<EOT
+{
+  "policies": ["viewer"],
+  "password": "viewer"
 }
 EOT
 }
@@ -40,23 +62,28 @@ resource "vault_auth_backend" "approle_auth" {
   type = "approle"
 }
 resource "vault_approle_auth_backend_role" "approle_auth_role_admin" {
-  backend        = vault_auth_backend.approle.path
+  backend        = vault_auth_backend.approle_auth.path
   role_name      = "admin"
   token_policies = ["admin"]
+}
+resource "vault_approle_auth_backend_role" "approle_auth_role_viewer" {
+  backend        = vault_auth_backend.approle_auth.path
+  role_name      = "viewer"
+  token_policies = ["viewer"]
 }
 
 # +-----------+
 # | Login MFA |
 # +-----------+
-resource "vault_identity_mfa_duo" "mfa_duo" {
+resource "vault_identity_mfa_duo" "mfa_duo_identity" {
   api_hostname    = var.api_hostname
   secret_key      = var.secret_key
   integration_key = var.integration_key
 }
-resource "vault_identity_mfa_login_enforcement" "mfa_duo_enforce" {
+resource "vault_identity_mfa_login_enforcement" "mfa_duo_identity_enforcement" {
   name = "default"
   mfa_method_ids = [
-    vault_identity_mfa_duo.mfa_duo.method_id,
+    vault_identity_mfa_duo.mfa_duo_identity.method_id,
   ]
   auth_method_accessors = [
     vault_auth_backend.mfa_userpass_auth.accessor
@@ -65,7 +92,7 @@ resource "vault_identity_mfa_login_enforcement" "mfa_duo_enforce" {
 
 # +------+
 # | Okta |
-# +------+ - disabled until VAULT-11854 is fixed
+# +------+ - Disabled until VAULT-11854 is fixed
 # resource "vault_okta_auth_backend" "okta_auth" {
 #     organization = var.okta_organization
 #     token        = var.okta_token
@@ -83,30 +110,6 @@ resource "vault_github_user" "github_auth_user" {
   policies = ["admin"]
 }
 
-# +-----+
-# | AWS |
-# +-----+
-# https://developer.hashicorp.com/vault/tutorials/cloud-ops/vault-auth-method-aws
-resource "vault_auth_backend" "aws" {
-  type = "aws"
-  path = "aws"
-}
-resource "vault_aws_auth_backend_sts_role" "role" {
-  backend    = vault_auth_backend.aws.path
-  account_id = "1234567890"
-  sts_role   = "arn:aws:iam::1234567890:role/my-role"
-}
-
-# +-----+
-# | JWT |
-# +-----+
-# resource "vault_jwt_auth_backend" "example" {
-#     description         = "Demonstration of the Terraform JWT auth backend"
-#     path                = "jwt"
-#     oidc_discovery_url  = "https://myco.auth0.com/"
-#     bound_issuer        = "https://myco.auth0.com/"
-# }
-
 # +------+
 # | LDAP |
 # +------+ 
@@ -121,52 +124,19 @@ resource "vault_aws_auth_backend_sts_role" "role" {
 #     groupfilter = "(&(objectClass=group)(member:1.2.840.113556.1.4.1941:={{.UserDN}}))"
 # }
 
-# +-------+
-# | Azure |
-# +-------+
-# resource "vault_auth_backend" "example" {
-#   type = "azure"
-# }
+# +-------------+
+# | Kubernetes  |
+# +-------------+
 
-# resource "vault_azure_auth_backend_config" "example" {
-#   backend       = vault_auth_backend.example.path
-#   tenant_id     = "11111111-2222-3333-4444-555555555555"
-#   client_id     = "11111111-2222-3333-4444-555555555555"
-#   client_secret = "01234567890123456789"
-#   resource      = "https://vault.hashicorp.com"
-# }
+# +------+
+# | JWT  |
+# +------+
 
-# +-----+
-# | GCP |
-# +-----+
-# resource "vault_gcp_auth_backend" "gcp" { 
-#   credentials  = file("vault-gcp-credentials.json")
-
-#   custom_endpoint = {
-#     api     = "www.googleapis.com"
-#     iam     = "iam.googleapis.com"
-#     crm     = "cloudresourcemanager.googleapis.com"
-#     compute = "compute.googleapis.com"
-#   }
-# }
-
-# +------------+
-# | Kubernetes |
-# +------------+
-# resource "vault_auth_backend" "kubernetes" {
-#   type = "kubernetes"
-# }
-
-# resource "vault_kubernetes_auth_backend_config" "example" {
-#   backend                = vault_auth_backend.kubernetes.path
-#   kubernetes_host        = "http://example.com:443"
-#   kubernetes_ca_cert     = "-----BEGIN CERTIFICATE-----\nexample\n-----END CERTIFICATE-----"
-#   token_reviewer_jwt     = "ZXhhbXBsZQo="
-#   issuer                 = "api"
-#   disable_iss_validation = "true"
-# }
-
+# +------+
+# | Cert |
+# +------+ 
 resource "vault_auth_backend" "cert" {
     path = "cert"
     type = "cert"
 }
+
