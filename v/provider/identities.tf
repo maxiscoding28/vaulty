@@ -7,3 +7,7 @@ resource "vault_identity_entity" "viewer" {
   name      = "viewer"
   policies  = ["viewer"]
 }
+
+# Entity Alias
+
+# Groups

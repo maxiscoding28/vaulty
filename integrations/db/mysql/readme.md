@@ -30,7 +30,7 @@ vault write database/roles/cat-lover \
     max_ttl="24h"
 
 <!-- Dog lover -->
-vault write database/roles/cat-lover \
+vault write database/roles/dog-lover \
     db_name=mysql \
     creation_statements="CREATE USER '{{name}}'@'%' IDENTIFIED BY '{{password}}';GRANT SELECT ON Animals.Dogs TO '{{name}}'@'%';" \
     default_ttl="1h" \
