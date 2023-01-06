@@ -1,0 +1,26 @@
+Base TF
+
+Auth Methods
+    Userpass
+    Userpass2
+    AppRole
+
+Identity
+    Entity
+    Entity Alias
+    Internal group
+
+Policy
+    admin
+    reader
+    dog-lovers
+    cat-lovers
+    golden-retriever
+    dachshund
+
+KV
+
+KV-V2
+
+
+

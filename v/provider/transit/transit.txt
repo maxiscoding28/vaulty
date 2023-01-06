@@ -1,0 +1,7 @@
+userpass
+
+policy
+
+transit
+    generate encryption key
+    file with json formatted strings to encrypt/decrypt

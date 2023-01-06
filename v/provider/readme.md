@@ -1,1 +1,0 @@
-This is terraform code that can optionally be used for populating the primary (`v`) cluster with pre-configigured seed data for vault. More details can be found in the [readme for that directory.](./v/provider/readme.md)

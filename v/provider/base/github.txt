@@ -1,0 +1,11 @@
+auth Methods
+    github
+    AppRole
+
+Identity
+    external group
+
+Policy
+
+Secrets
+    KV-v2

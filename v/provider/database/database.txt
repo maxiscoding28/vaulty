@@ -1,0 +1,17 @@
+DB TF
+
+auth_method
+    userpass
+
+policy
+    admin
+    writer
+    reader
+
+secrets
+    mysql
+    postgres
+    mssql
+    mongo
+
+
